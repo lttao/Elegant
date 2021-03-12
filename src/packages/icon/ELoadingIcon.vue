@@ -51,7 +51,6 @@ export default {
 .e-loading-icon {
   position: relative;
   box-sizing: border-box;
-  display: inline-flex;
   animation: e-loading-rotate 0.8s linear infinite;
   &_spinner {
     animation-timing-function: steps(12);

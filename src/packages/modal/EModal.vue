@@ -59,7 +59,7 @@ export default {
     },
     marginTop: {
       type: [Number, String],
-      default: 0
+      default: '-10vh'
     }, // 调整垂直位置(center生效)
     title: String,
     content: String,
