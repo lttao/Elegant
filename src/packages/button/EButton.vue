@@ -4,35 +4,28 @@
     :open-type="openType"
     :loading="loading && !disabled"
     :style="[buttonStyle]"
-    :class="[
-      { 'e-disabled': disabled },
-      plain ? `e-${type}-button-plain` : '',
-      `e-${type}-button`,
-      `e-${size}-button`
-    ]"
+    :class="[{ 'e-disabled': disabled }, plain ? `e-${type}-button-plain` : '', `e-${type}-button`, `e-${size}-button`]"
     :hover-class="hoverClass"
     class="e-button"
   >
-    <text v-if="loading && !disabled" class="e-button_loading-text">{{
-      loadingText
-    }}</text>
+    <text v-if="loading && !disabled" class="e-button_loading-text">{{ loadingText }}</text>
     <slot v-else></slot>
   </button>
 </template>
 
 <script>
-import { getRect } from "../_utils/getRect";
+import { getRect } from '../_utils/getRect'
 
 export default {
-  name: "EButton",
+  name: 'EButton',
   props: {
     type: {
       type: String,
-      default: "primary"
+      default: 'primary'
     }, // 按钮类型
     size: {
       type: String,
-      default: "default"
+      default: 'default'
     }, // 按钮大小
     width: [String, Number], // 按钮宽度
     height: [String, Number], // 按钮高度
@@ -50,60 +43,50 @@ export default {
   data() {
     return {
       buttonHeight: 0
-    };
+    }
   },
   computed: {
     // 按钮样式
     buttonStyle(vm) {
-      const {
-        addUnit,
-        borderRadius,
-        color,
-        customStyle,
-        fontSize,
-        height,
-        round,
-        square,
-        width
-      } = vm;
+      const { addUnit, borderRadius, color, customStyle, fontSize, height, round, square, width } = vm
       const buttonStyle = {
         color,
         fontSize: addUnit(fontSize)
-      };
-      if (width) buttonStyle.width = addUnit(width);
-      if (height) {
-        buttonStyle.height = addUnit(height);
-        buttonStyle.lineHeight = addUnit(height);
       }
-      if (square) buttonStyle.borderRadius = 0;
-      if (round) buttonStyle.borderRadius = this.buttonHeight + "px";
-      if (borderRadius) buttonStyle.borderRadius = addUnit(borderRadius);
-      return { buttonStyle, ...customStyle };
+      if (width) buttonStyle.width = addUnit(width)
+      if (height) {
+        buttonStyle.height = addUnit(height)
+        buttonStyle.lineHeight = addUnit(height)
+      }
+      if (square) buttonStyle.borderRadius = 0
+      if (round) buttonStyle.borderRadius = this.buttonHeight + 'px'
+      if (borderRadius) buttonStyle.borderRadius = addUnit(borderRadius)
+      return { buttonStyle, ...customStyle }
     },
     // 按钮hover效果
     hoverClass(vm) {
-      const { disabled, loading } = vm;
-      if (disabled || loading) return "";
-      return "e-hover";
+      const { disabled, loading } = vm
+      if (disabled || loading) return ''
+      return 'e-hover'
     }
   },
   mounted() {
-    getRect(".e-button").then(rect => {
-      this.buttonHeight = rect.height;
-    });
+    getRect('.e-button').then((rect) => {
+      this.buttonHeight = rect.height
+    })
   },
   methods: {
     handleTap(e) {
-      const { disabled, loading } = this;
-      if (disabled || loading) return;
-      this.$emit("click", e);
+      const { disabled, loading } = this
+      if (disabled || loading) return
+      this.$emit('click', e)
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
-@import "../_styles/layout.scss";
+@import '../_styles/layout.scss';
 .e-button {
   box-sizing: border-box;
   font-weight: 500;
@@ -118,7 +101,7 @@ export default {
   }
 }
 
-// 按钮特色样式
+// 按钮类型
 .e-primary-button {
   background: $e-primary-color;
   color: #fff;

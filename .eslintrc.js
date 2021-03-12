@@ -3,20 +3,20 @@ module.exports = {
     browser: true,
     es6: true
   },
-  extends: ["plugin:vue/essential", "standard", "prettier"],
+  extends: ['plugin:vue/essential', 'standard', 'prettier'],
   globals: {
-    Atomics: "readonly",
+    Atomics: 'readonly',
     uni: true,
     plus: true,
-    SharedArrayBuffer: "readonly",
+    SharedArrayBuffer: 'readonly',
     wx: true
   },
   parserOptions: {
     ecmaVersion: 2018,
-    sourceType: "module"
+    sourceType: 'module'
   },
-  plugins: ["prettier", "vue"],
+  plugins: ['prettier', 'vue'],
   rules: {
-    "prettier/prettier": "error"
+    'prettier/prettier': 'error'
   }
-};
+}
