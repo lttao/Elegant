@@ -1,34 +1,16 @@
 <template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view>
-			<text class="title">{{title}}</text>
-		</view>
-	</view>
+  <view class="content">
+    <e-button>按钮</e-button>
+  </view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				title: 'Hello'
-			}
-		},
-		onLoad() {
-
-		},
-		methods: {
-
-		}
-	}
-</script>
-
-
-<style lang="scss" scoped>
-.content {
-	background: red;
-	.logo {
-		width: 10px;
-	}
+import EButton from '@/packages/button/EButton'
+export default {
+  components: {
+    EButton
+  },
+  onLoad() {},
+  methods: {}
 }
-</style>
+</script>

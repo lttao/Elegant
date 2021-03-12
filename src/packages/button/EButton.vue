@@ -14,10 +14,12 @@
 </template>
 
 <script>
-import { getRect } from '../_utils/getRect'
+import mixin from '../_mixins'
+import { addUnit } from '../_utils'
 
 export default {
   name: 'EButton',
+  mixins: [mixin],
   props: {
     type: {
       type: String,
@@ -48,7 +50,7 @@ export default {
   computed: {
     // 按钮样式
     buttonStyle(vm) {
-      const { addUnit, borderRadius, color, customStyle, fontSize, height, round, square, width } = vm
+      const { borderRadius, color, customStyle, fontSize, height, round, square, width } = vm
       const buttonStyle = {
         color,
         fontSize: addUnit(fontSize)
@@ -71,7 +73,7 @@ export default {
     }
   },
   mounted() {
-    getRect('.e-button').then((rect) => {
+    this.getRect('.e-button').then((rect = {}) => {
       this.buttonHeight = rect.height
     })
   },
