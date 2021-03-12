@@ -1,16 +1,16 @@
 export function getRect(selector, all) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     uni
       .createSelectorQuery()
       .in(this)
-      [all ? 'selectAll' : 'select'](selector)
-      .boundingClientRect((rect) => {
+      [all ? "selectAll" : "select"](selector)
+      .boundingClientRect(rect => {
         if (all && Array.isArray(rect) && rect.length) {
-          resolve(rect)
+          resolve(rect);
         } else if (!all && rect) {
-          resolve(rect)
+          resolve(rect);
         }
       })
-      .exec()
-  })
+      .exec();
+  });
 }
