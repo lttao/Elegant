@@ -43,11 +43,11 @@ export default {
     },
     width: {
       type: [Number, String],
-      default: 700
+      default: 650
     },
     minHeight: {
       type: [Number, String],
-      default: 450
+      default: 400
     },
     maxHeight: {
       type: [Number, String],
@@ -132,6 +132,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../_styles/color.scss';
 @import '../_styles/layout.scss';
 .e-modal {
   background: #fff;

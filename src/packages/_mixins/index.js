@@ -1,10 +1,10 @@
 export default {
   methods: {
-    getRect(that, selector, all) {
+    getRect(selector, all) {
       return new Promise((resolve) => {
         uni
           .createSelectorQuery()
-          .in(that)
+          .in(this)
           [all ? 'selectAll' : 'select'](selector)
           .boundingClientRect((rect) => {
             if (all && Array.isArray(rect) && rect.length) {

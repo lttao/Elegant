@@ -89,7 +89,7 @@ export default {
     }
   },
   watch: {
-    showChange(n, o) {
+    value(n, o) {
       if (n === o) return
       n ? this.enter() : this.leave()
     }

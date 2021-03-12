@@ -31,7 +31,10 @@ export default {
     }, // 按钮大小
     width: [String, Number], // 按钮宽度
     height: [String, Number], // 按钮高度
-    fontSize: [String, Number], // 字体大小
+    fontSize: {
+      type: [String, Number],
+      default: '16px'
+    }, // 字体大小
     borderRadius: [String, Number], // 按钮圆角
     openType: String, // 开放能力 与uniapp官方相同
     color: String, // 字体颜色
@@ -40,7 +43,11 @@ export default {
     disabled: Boolean, // 按钮失效
     loading: Boolean, // 按钮加载
     square: Boolean, // 方形按钮
-    round: Boolean // 圆形按钮
+    round: Boolean, // 圆形按钮
+    customStyle: {
+      type: Object,
+      default: () => ({})
+    }
   },
   data() {
     return {
@@ -50,7 +57,7 @@ export default {
   computed: {
     // 按钮样式
     buttonStyle(vm) {
-      const { borderRadius, color, customStyle, fontSize, height, round, square, width } = vm
+      const { borderRadius, buttonHeight, color, customStyle, fontSize, height, round, square, width } = vm
       const buttonStyle = {
         color,
         fontSize: addUnit(fontSize)
@@ -61,9 +68,9 @@ export default {
         buttonStyle.lineHeight = addUnit(height)
       }
       if (square) buttonStyle.borderRadius = 0
-      if (round) buttonStyle.borderRadius = this.buttonHeight + 'px'
+      if (round) buttonStyle.borderRadius = `${buttonHeight}px`
       if (borderRadius) buttonStyle.borderRadius = addUnit(borderRadius)
-      return { buttonStyle, ...customStyle }
+      return { ...buttonStyle, ...customStyle }
     },
     // 按钮hover效果
     hoverClass(vm) {
@@ -73,11 +80,14 @@ export default {
     }
   },
   mounted() {
-    this.getRect('.e-button').then((rect = {}) => {
-      this.buttonHeight = rect.height
-    })
+    this.getHeight()
   },
   methods: {
+    getHeight() {
+      this.getRect('.e-button').then((rect = {}) => {
+        this.buttonHeight = rect.height
+      })
+    },
     handleTap(e) {
       const { disabled, loading } = this
       if (disabled || loading) return
