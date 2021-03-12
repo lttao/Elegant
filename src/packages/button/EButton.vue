@@ -88,7 +88,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../_styles/layout.scss';
+@import '../_styles/color.scss';
 .e-button {
   box-sizing: border-box;
   font-weight: 500;
