@@ -30,7 +30,7 @@ export default {
     customClass({ customPrefix, name }) {
       return customPrefix + name
     },
-    isImage({ name }) {
+    isImage({ name = '' }) {
       return name.indexOf('/') !== -1
     },
     iconStyle(vm) {
