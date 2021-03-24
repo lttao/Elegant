@@ -11,6 +11,12 @@
 			"style": {
 				"navigationBarTitleText": "按钮"
 			}
+		},
+		{
+			"path": "pages/example/calendar",
+			"style": {
+				"navigationBarTitleText": "日历"
+			}
 		}
 	],
 	"globalStyle": {
