@@ -9,8 +9,8 @@
           <view class="e-month_title">{{ item.title }}</view>
           <view class="e-month_list">
             <block v-for="(e, i) in item.days" :key="i">
-              <view @click="handleChange(e)" :class="getClass(e)" class="e-month_item">
-                {{ e.text }}
+              <view @click="handleChange(e)" :class="{ 'e-month_item-checked': selectDate === e.date, 'e-month_weekend': e.week === 0 || e.week === 6 }" class="e-month_item">
+                <text>{{ e.day || '' }}</text>
               </view>
             </block>
           </view>
@@ -21,21 +21,27 @@
 </template>
 
 <script>
+import { zeroFill } from '../_utils'
+
 let CURRENTDATE = new Date()
 const CURRENTYEAR = CURRENTDATE.getFullYear()
-const CURRENTMONTH = CURRENTDATE.getMonth()
+const CURRENTMONTH = CURRENTDATE.getMonth() + 1
 const CURRENTDAY = CURRENTDATE.getDate()
 
 export default {
   name: 'ECalendar',
   props: {
     startDate: {
-      type: Number,
-      default: CURRENTDATE.getTime()
+      type: String,
+      default: `${CURRENTYEAR}-${zeroFill(CURRENTMONTH)}-${zeroFill(CURRENTDAY)}`
     },
     endDate: {
-      type: Number,
-      default: new Date(CURRENTYEAR, CURRENTMONTH + 4, CURRENTDAY).getTime()
+      type: String,
+      default: `${CURRENTYEAR}-${zeroFill(CURRENTMONTH + 4)}-${zeroFill(CURRENTDAY)}`
+    },
+    defaultDate: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -53,33 +59,40 @@ export default {
       }
     }
   },
+  watch: {
+    defaultDate(n, o) {
+      if (n !== o) this.selectDate = n
+    }
+  },
   created() {
+    const { defaultDate } = this
+    if (defaultDate) this.selectDate = defaultDate
+
     this.init()
   },
   methods: {
     handleChange(e) {
+      if (!e.date) return
       console.log(e)
       this.selectDate = e.date
       this.$emit('change', e)
     },
     init() {
-      const { startDate, endDate } = this
+      const { getMonthBetween, getDays, getTitle, startDate, endDate, formatDate } = this
       const months = []
-      const monthBetween = this.getMonthBetween(startDate, endDate)
+      const monthBetween = getMonthBetween(formatDate(startDate), formatDate(endDate))
       monthBetween.forEach((item) => {
         months.push({
-          days: this.getDays(item),
-          title: this.getTitle(item)
+          days: getDays(item),
+          title: getTitle(item)
         })
       })
       this.months = months
-      console.log(months)
     },
     getMonthBetween(start, end) {
       const result = []
-      start = new Date(start)
+      const curr = (start = new Date(start))
       end = new Date(end)
-      const curr = start
       // eslint-disable-next-line no-unmodified-loop-condition
       while (curr <= end) {
         // 获取此时间的月份
@@ -91,28 +104,24 @@ export default {
     },
     getTitle(date) {
       const { year, month } = this.getDateInfo(date)
-      return `${year}年${month}月`
+      return `${year}年${zeroFill(month)}月`
     },
     getDays(date) {
       const days = []
       const { year, month, totalDays, beginDays } = this.getDateInfo(date)
       for (let i = 0; i < beginDays; i++) {
-        days.push({
-          date: undefined,
-          type: 'empty',
-          text: '',
-          bottomInfo: ''
-        })
+        days.push({ date: '' })
       }
 
       for (let day = 1; day <= totalDays; day++) {
-        const date = new Date(year, month, day)
-        // const type = this.getDayType(date);
-
+        const date = `${year}-${zeroFill(month)}-${zeroFill(day)}`
+        const week = new Date(year, month - 1, day).getDay()
         const config = {
           date,
-          type: '',
-          text: day,
+          year,
+          month,
+          day,
+          week,
           bottomInfo: ''
         }
 
@@ -136,6 +145,9 @@ export default {
     },
     gettotalDays(year, month) {
       return 32 - new Date(year, month - 1, 32).getDate()
+    },
+    formatDate(date) {
+      return date.replace(/-/g, '/')
     }
   },
   destroyed() {
@@ -170,6 +182,9 @@ export default {
   &_list {
     display: flex;
     flex-wrap: wrap;
+  }
+  &_weekend {
+    color: red;
   }
   &_item {
     width: calc(100% / 7);
