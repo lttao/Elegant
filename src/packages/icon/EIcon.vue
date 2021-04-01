@@ -62,3 +62,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.e-icon {
+  font-size: 0;
+}
+</style>

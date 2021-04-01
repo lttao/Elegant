@@ -17,6 +17,12 @@
 			"style": {
 				"navigationBarTitleText": "日历"
 			}
+		},
+		{
+			"path": "pages/example/input",
+			"style": {
+				"navigationBarTitleText": "输入框"
+			}
 		}
 	],
 	"globalStyle": {

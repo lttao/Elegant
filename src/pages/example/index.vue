@@ -7,6 +7,7 @@
     <ECellGroup gap="1px">
       <ECell arrow label="按钮" url="/pages/example/button" />
       <ECell arrow label="日历" url="/pages/example/calendar" />
+      <ECell arrow label="输入框" url="/pages/example/input" />
     </ECellGroup>
   </view>
 </template>
